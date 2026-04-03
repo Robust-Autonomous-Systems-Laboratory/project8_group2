@@ -1,4 +1,4 @@
-# Project 7, ROS2 Navigation Stack, Group 1
+# Project 8, ROS2 Navigation Stack, Group 1
 #### Progress Munoriarwa & Malcolm Benedict
 
 ### Part 1
