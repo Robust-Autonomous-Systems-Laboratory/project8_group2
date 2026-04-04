@@ -197,7 +197,61 @@ local_costmap:
       height: 3
       resolution: 0.05
       robot_radius: 0.22
-      plugins: ["voxel_layer", "inflation_layer","keepout_filter"]
+      plugins: ["voxel_layer", "inflation_layer", "keepout_filter", "speed_filter"]
+
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.70
+
+      voxel_layer:
+        plugin: "nav2_costmap_2d::VoxelLayer"
+        enabled: True
+        publish_voxel_map: True
+        origin_z: 0.0
+        z_resolution: 0.05
+        z_voxels: 16
+        max_obstacle_height: 2.0
+        mark_threshold: 0
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        enabled: True
+        filter_info_topic: "/keepout_costmap_filter_info"
+
+      speed_filter:
+        plugin: "nav2_costmap_2d::SpeedFilter"
+        enabled: True
+        filter_info_topic: "/speed_costmap_filter_info"
+
+      always_send_full_costmap: True
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 3
+      height: 3
+      resolution: 0.05
+      robot_radius: 0.22
+      plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
@@ -241,7 +295,8 @@ global_costmap:
       robot_radius: 0.22
       resolution: 0.05
       track_unknown_space: true
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer","keepout_filter"]
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer", "keepout_filter", "speed_filter"]
+
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -256,19 +311,28 @@ global_costmap:
         raytrace_min_range: 0.0
         obstacle_max_range: 2.5
         obstacle_min_range: 0.0
+
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
+
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
         inflation_radius: 0.7
+
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
         enabled: True
-        filter_info_topic: "/costmap_filter_info"
-      always_send_full_costmap: True
+        filter_info_topic: "/keepout_costmap_filter_info"
 
+      speed_filter:
+        plugin: "nav2_costmap_2d::SpeedFilter"
+        enabled: True
+        filter_info_topic: "/speed_costmap_filter_info"
+
+      always_send_full_costmap: True
+      
 # The yaml_filename does not need to be specified since it going to be set by defaults in launch.
 # If you'd rather set it in the yaml, remove the default "map" value in the tb3_simulation_launch.py
 # file & provide full path to map below. If CLI map configuration or launch default is provided, that will be used.
@@ -476,17 +540,34 @@ loopback_simulator:
     scan_angle_increment: 0.02617
     scan_use_inf: true
 
-filter_mask_server:
+keepout_filter_mask_server:
   ros__parameters:
     use_sim_time: False
     frame_id: "map"
-    topic_name: "/filter_mask"
-    mask_topic: "/filter_mask"
+    topic_name: "/keepout_filter_mask"
+    yaml_filename: "config/keepout_mask.yaml"
 
-costmap_filter_info_server:
+keepout_costmap_filter_info_server:
   ros__parameters:
     use_sim_time: False
-    filter_info_topic: "/costmap_filter_info"
-    type: 0          # 0 = keepout, 1 = speed filter
+    filter_info_topic: "/keepout_costmap_filter_info"
+    type: 0
+    mask_topic: "/keepout_filter_mask"
     base: 0.0
     multiplier: 1.0
+
+speed_filter_mask_server:
+  ros__parameters:
+    use_sim_time: False
+    frame_id: "map"
+    topic_name: "/speed_filter_mask"
+    yaml_filename: "config/speed_mask.yaml"
+
+speed_costmap_filter_info_server:
+  ros__parameters:
+    use_sim_time: False
+    filter_info_topic: "/speed_costmap_filter_info"
+    type: 1
+    mask_topic: "/speed_filter_mask"
+    base: 100.0
+    multiplier: -50.0

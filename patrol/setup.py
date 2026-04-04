@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'og'
+package_name = 'patrol'
 
 setup(
     name=package_name,
@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'og_node = og.og_node:main'
+            'patrol_node = patrol.patrol_node:main'
         ],
     },
 )
