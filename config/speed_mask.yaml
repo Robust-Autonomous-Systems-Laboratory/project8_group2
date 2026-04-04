@@ -1,0 +1,9 @@
+# config/speed_mask.yaml
+image: speed_mask.pgm
+resolution: 0.05
+origin: [-5.395, -9.691, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+mode: speed
+speed_limit: 0.2   # m/s — fill with your chosen limit
