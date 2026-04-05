@@ -229,14 +229,10 @@ local_costmap:
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
           obstacle_min_range: 0.0
-<<<<<<< Updated upstream
-
-=======
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
         enabled: True
         filter_info_topic: "/costmap_filter_info"
->>>>>>> Stashed changes
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
@@ -307,12 +303,7 @@ global_costmap:
       robot_radius: 0.22
       resolution: 0.05
       track_unknown_space: true
-<<<<<<< Updated upstream
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer", "keepout_filter", "speed_filter"]
-
-=======
       plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer","keepout_filter"]
->>>>>>> Stashed changes
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -334,10 +325,6 @@ global_costmap:
 
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-<<<<<<< Updated upstream
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.7
-=======
         inflation_radius: 0.5
         cost_scaling_factor: 5.0
       keepout_filter:
@@ -345,7 +332,6 @@ global_costmap:
         enabled: True
         filter_info_topic: "/costmap_filter_info"
       always_send_full_costmap: true
->>>>>>> Stashed changes
 
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
@@ -501,104 +487,6 @@ collision_monitor:
 
 docking_server:
   ros__parameters:
-<<<<<<< Updated upstream
-    controller_frequency: 50.0
-    initial_perception_timeout: 5.0
-    wait_charge_timeout: 5.0
-    dock_approach_timeout: 30.0
-    undock_linear_tolerance: 0.05
-    undock_angular_tolerance: 0.1
-    max_retries: 3
-    base_frame: "base_link"
-    fixed_frame: "odom"
-    dock_backwards: false
-    dock_prestaging_tolerance: 0.5
-
-    # Types of docks
-    dock_plugins: ['simple_charging_dock']
-    simple_charging_dock:
-      plugin: 'opennav_docking::SimpleChargingDock'
-      docking_threshold: 0.05
-      staging_x_offset: -0.7
-      use_external_detection_pose: true
-      use_battery_status: false # true
-      use_stall_detection: false # true
-
-      external_detection_timeout: 1.0
-      external_detection_translation_x: -0.18
-      external_detection_translation_y: 0.0
-      external_detection_rotation_roll: -1.57
-      external_detection_rotation_pitch: -1.57
-      external_detection_rotation_yaw: 0.0
-      filter_coef: 0.1
-
-    # Dock instances
-    # The following example illustrates configuring dock instances.
-    # docks: ['home_dock']  # Input your docks here
-    # home_dock:
-    #   type: 'simple_charging_dock'
-    #   frame: map
-    #   pose: [0.0, 0.0, 0.0]
-
-    controller:
-      k_phi: 3.0
-      k_delta: 2.0
-      v_linear_min: 0.15
-      v_linear_max: 0.15
-      use_collision_detection: true
-      costmap_topic: "local_costmap/costmap_raw"
-      footprint_topic: "local_costmap/published_footprint"
-      transform_tolerance: 0.1
-      projection_time: 5.0
-      simulation_step: 0.1
-      dock_collision_threshold: 0.3
-
-loopback_simulator:
-  ros__parameters:
-    base_frame_id: "base_footprint"
-    odom_frame_id: "odom"
-    map_frame_id: "map"
-    scan_frame_id: "base_scan"  # tb4_loopback_simulator.launch.py remaps to 'rplidar_link'
-    update_duration: 0.02
-    scan_range_min: 0.05
-    scan_range_max: 30.0
-    scan_angle_min: -3.1415
-    scan_angle_max: 3.1415
-    scan_angle_increment: 0.02617
-    scan_use_inf: true
-
-keepout_filter_mask_server:
-  ros__parameters:
-    use_sim_time: False
-    frame_id: "map"
-    topic_name: "/keepout_filter_mask"
-    yaml_filename: "/keepout_mask.yaml"
-
-keepout_costmap_filter_info_server:
-  ros__parameters:
-    use_sim_time: False
-    filter_info_topic: "/keepout_costmap_filter_info"
-    type: 0
-    mask_topic: "/keepout_filter_mask"
-    base: 0.0
-    multiplier: 1.0
-
-speed_filter_mask_server:
-  ros__parameters:
-    use_sim_time: False
-    frame_id: "map"
-    topic_name: "/speed_filter_mask"
-    yaml_filename: "speed_mask.yaml"
-
-speed_costmap_filter_info_server:
-  ros__parameters:
-    use_sim_time: False
-    filter_info_topic: "/speed_costmap_filter_info"
-    type: 1
-    mask_topic: "speed_filter_mask"
-    base: 100.0
-    multiplier: -50.0
-=======
     smoothing_frequency: 20.0
     scale_velocities: false
     feedback: "OPEN_LOOP"
@@ -627,4 +515,3 @@ costmap_filter_info_server:
     type: 0          # 0 = keepout, 1 = speed filter
     base: 0.0
     multiplier: 1.0
->>>>>>> Stashed changes
