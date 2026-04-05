@@ -66,7 +66,9 @@ Using the recommended parameter ranges, nine total sets of parameters were exami
 Route planning was done with Test 8 parameters. However, the robot never moved, even with a valid path to target and an initial pose estimate. Nav2 would show that it was attempting to follow the path, but no actual movement happened. This was even after the initial pose estimate had been set, and the Turtlebot moved around with teleop. This issue had been encountered in previous Turtlebot experiments, however, the author cannot remember how they resolved the issue.
 
 <div style="text-align: center; margin-left: auto; margin-right: auto; width: 75%">
+
 ![alt text](./figures/navGoal1.png "Nav2 Goal")
+
 </div>
 
 

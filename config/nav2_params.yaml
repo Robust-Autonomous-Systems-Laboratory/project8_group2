@@ -196,9 +196,14 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
+<<<<<<< Updated upstream
       robot_radius: 0.22
       plugins: ["voxel_layer", "inflation_layer", "keepout_filter", "speed_filter"]
 
+=======
+      robot_radius: 0.1
+      plugins: ["obstacle_layer", "voxel_layer", "inflation_layer","keepout_filter"]
+>>>>>>> Stashed changes
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
@@ -224,7 +229,14 @@ local_costmap:
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
           obstacle_min_range: 0.0
+<<<<<<< Updated upstream
 
+=======
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        enabled: True
+        filter_info_topic: "/costmap_filter_info"
+>>>>>>> Stashed changes
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
@@ -295,8 +307,12 @@ global_costmap:
       robot_radius: 0.22
       resolution: 0.05
       track_unknown_space: true
+<<<<<<< Updated upstream
       plugins: ["static_layer", "obstacle_layer", "inflation_layer", "keepout_filter", "speed_filter"]
 
+=======
+      plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer","keepout_filter"]
+>>>>>>> Stashed changes
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -318,8 +334,18 @@ global_costmap:
 
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
+<<<<<<< Updated upstream
         cost_scaling_factor: 3.0
         inflation_radius: 0.7
+=======
+        inflation_radius: 0.5
+        cost_scaling_factor: 5.0
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        enabled: True
+        filter_info_topic: "/costmap_filter_info"
+      always_send_full_costmap: true
+>>>>>>> Stashed changes
 
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
@@ -475,6 +501,7 @@ collision_monitor:
 
 docking_server:
   ros__parameters:
+<<<<<<< Updated upstream
     controller_frequency: 50.0
     initial_perception_timeout: 5.0
     wait_charge_timeout: 5.0
@@ -571,3 +598,33 @@ speed_costmap_filter_info_server:
     mask_topic: "speed_filter_mask"
     base: 100.0
     multiplier: -50.0
+=======
+    smoothing_frequency: 20.0
+    scale_velocities: false
+    feedback: "OPEN_LOOP"
+    max_velocity: [0.5, 0.0, 2.5]
+    min_velocity: [-0.5, 0.0, -2.5]
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0
+    max_accel: [2.5, 0.0, 3.2]
+    max_decel: [-2.5, 0.0, -3.2]
+    odom_topic: "odom"
+    odom_duration: 0.1
+    use_realtime_priority: false
+    enable_stamped_cmd_vel: true
+
+filter_mask_server:
+  ros__parameters:
+    use_sim_time: False
+    frame_id: "map"
+    topic_name: "/filter_mask"
+    mask_topic: "/filter_mask"
+
+costmap_filter_info_server:
+  ros__parameters:
+    use_sim_time: False
+    filter_info_topic: "/costmap_filter_info"
+    type: 0          # 0 = keepout, 1 = speed filter
+    base: 0.0
+    multiplier: 1.0
+>>>>>>> Stashed changes
