@@ -15,35 +15,68 @@ This exercise covers the Nav2 stack, tuneable parameters and autonomous navigati
 
 2. Change directories into the cloned repository and then build the package.
 ```
-cd ~/project8_group1
-colcon build
+$ cd ~/project8_group1
+$ colcon build
 ```
 3. Export your domain ID and Turtlebot model. Alternatively, `turtlebot_connect.sh` may also be sourced.
 ```
-export TURTLEBOT3_MODEL=burger
-export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-export ROS_DOMAIN_ID= #Your Turtlebot ID here
+$ export TURTLEBOT3_MODEL=burger
+$ export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+$ export ROS_DOMAIN_ID= #Your Turtlebot ID here
 ```
 4. Secure Shell into the Turtlebot.
 ```
-ssh ubuntu@#Your Turtlebot IP Address
+$ ssh ubuntu@#Your Turtlebot IP Address
 ```
 5. On the Turtlebot, run the following to initialize it.
 ```
-ros2 launch turtlebot3_bringup robot.launch.py
+$ ros2 launch turtlebot3_bringup robot.launch.py
 ```
 
 ### Part 1
 1. Edit `config/nav2_params.yaml` with your desired values of `cost_scaling_factor` and `inflation_radius`. Save the file.
 2. Open up a new terminal window export the params and source it.
 ```
-source install/setup.bash
-export TURTLEBOT3_MODEL=burger
-export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-export ROS_DOMAIN_ID= #Your Turtlebot ID here
+$ source install/setup.bash
+$ export TURTLEBOT3_MODEL=burger
+$ export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+$ export ROS_DOMAIN_ID= #Your Turtlebot ID here
 ```
-3. Run the 
-4. The Nav2 params. are configured to initially assume the Turtlebot is located on the marked start position. 
+3. Run the Turtlebot Nav2 launch file.
+```
+$ ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=maps/map_eerc722.yaml params_file:=config/nav2_params.yam
+```
+4. The Nav2 params. are configured to initially assume the Turtlebot is located on the marked start position. If it is not, you will need to correct its position estimate with the "2D Pose Estimate" Button.
+5. Observe the effects of your Costmap parameter changes. 
+6. If desired, set a Nav2 Goal, and watch the Turtlebot navigate to it.
+
+### Part 2
+
+TODO
+
+### Part 3 & 4
+1. Open three new terminal windows, export the params and source them.
+```
+$ source install/setup.bash
+$ export TURTLEBOT3_MODEL=burger
+$ export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+$ export ROS_DOMAIN_ID= #Your Turtlebot ID here
+```
+2. In the first terminal, run the Turtlebot Nav2 launch file.
+```
+$ ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=maps/map_eerc722.yaml params_file:=config/nav2_params.yam
+```
+3. In the second terminal, run Turtlebot teleop.
+```
+$ ros2 run turtlebot3_teleop teleop_keyboard
+```
+4. In the third terminal, run the patrol node.
+```
+$ ros2 run patrol patrol_node.py 
+```
+5. Quickly switch back to the teleop terminal and set the linear velocity to 0.05m/s.
+6. Once the patrol node receives an AMCL pose estimate, kill the teleop node with `Ctrl-C`.
+7. You should be able to observe the turtlebot making three loops on the patrol path, with the drift printing in the terminal.
 
 ## Part 1 — Costmap Layer Configuration
 
