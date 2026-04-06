@@ -94,8 +94,6 @@ class PatrolNode(Node):
 
     def wait_for_nav2_active(self):
         self.get_logger().info('Waiting for Nav2 to become active...')
-        #self.navigator.waitUntilNav2Active(localizer="bt_navigator")
-        self.get_logger().info('I want to die')
 
     def run_single_waypoint(self, waypoint_id: int, label: str, pose: PoseStamped) -> str:
         start_time = time.time()
