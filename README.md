@@ -1,7 +1,7 @@
 # Project 8, ROS2 Navigation Stack, Group 1
-#### Progress Munoriarwa & Malcolm Benedict
+#### Progress Munoriarwa, Malcolm Benedict, and Eineje Ameh
 
-### Part 1
+## Part 1 — Costmap Layer Configuration
 
 Using the recommended parameter ranges, nine total sets of parameters were examined, representing all combinations of the three radii and scaling factors. The inflation radius governed how far from a detected obstacle the cost would be increased. A large radius would result in the movement cost of a space being altered even a significant distance from the object itself. The scaling factor determined how the cost within the radius scaled. Therefore, the cost of any given space was based on its relative position within the radius and the scaling factor.
 
@@ -63,10 +63,11 @@ Using the recommended parameter ranges, nine total sets of parameters were exami
 
 </div>
 
-Route planning was done with Test 8 parameters. However, the robot never moved, even with a valid path to target and an initial pose estimate. Nav2 would show that it was attempting to follow the path, but no actual movement happened. This was even after the initial pose estimate had been set, and the Turtlebot moved around with teleop. This issue had been encountered in previous Turtlebot experiments, however, the author cannot remember how they resolved the issue.
+Route planning was done with Test 8 parameters. The goal was set in a narrow pathway, however, this did not seem to particularly effect the navigation. Perhaps an even narrower hallway, such that the Turtlebot would be forced to navigate through an obstacle's inflation radius would have more of an effect. However, there were several times where the Turtlebot briefly passed through the inflation radius with no noticeable effect.
 
 <div style="text-align: center; margin-left: auto; margin-right: auto; width: 75%">
-![alt text](./figures/navGoal1.png "Nav2 Goal")
+
+![alt text](./figures/Nav2Goal1.png "Nav2 Goal")
 </div>
 
 
@@ -96,8 +97,28 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 ![alt text](./figures/cTest2b.png "Test 2, with human")
 </div>
 
-# Part 2 — Keepout and Speed Filter Zones
+## Part 2 — Keepout and Speed Filter Zones
 
 ![alt text](./figures/taped_floor.jpg "The taped floor zones")
 ![alt text](./figures/keepout_render.png "Keepout zone rendered")
 ![alt text](./figures/keepout_path.png "Routes around the keepout zone")
+
+## Part 3 — Autonomous Patrol Script
+
+![alt text](./figures/patrol1.png "Terminal Output")
+
+While completing this section,there was an issue where the Turtlebot would successfully reach a goal, but report it had failed, as seen in the output log. This may have been the result of an issue where some node would become desynced from the others, causing transforms to be dropped. This tended to happen during long runs.
+
+## Part 4 — Patrol Execution and Analysis
+
+### Recovery
+
+While navigating to the waypoints in the back of the room, the Turtlebot ran into one of the chair feet. This happened because the chair feet are so low that the Turtlebot cannot see them. It stayed stuck for about 10 seconds, before backing up, adjusting the angle and driving around the chair successfully and continuing the patrol. This could be solved by increasing the inflation radius or decreasing cost scaling, to cause Nav2 to give the chairs a wider clearance.
+
+### Drift Analysis
+
+| Cycle | Start pose (x, y) | End pose (x, y) | Drift (m) |
+| :---: | :---------------: | :-------------: | :-------: |
+|1      |                   |                 |           |
+|2      |                   |                 |           |
+|3      |                   |                 |           |
