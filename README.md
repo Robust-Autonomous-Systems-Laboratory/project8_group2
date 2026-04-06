@@ -95,3 +95,9 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 ![alt text](./figures/cTest2a.png "Test 2, no human")
 ![alt text](./figures/cTest2b.png "Test 2, with human")
 </div>
+
+# Part 2 — Keepout and Speed Filter Zones
+
+![alt text](./figures/taped_floor.jpg "The taped floor zones")
+![alt text](./figures/keepout_render.png "Keepout zone rendered")
+![alt text](./figures/keepout_path.png "Routes around the keepout zone")
