@@ -15,16 +15,13 @@ setup(
     zip_safe=True,
     maintainer='progress',
     maintainer_email='mmunoria@mtu.edu',
-    description='TODO: Package description',
-    license='TODO: License declaration',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
+    description='Autonomous patrol package for EE5531 Project 8',
+    license='Apache-2.0',
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'patrol_node = patrol.patrol_node:main'
+            'patrol_node = patrol.patrol_node:main',
+            'patrol_node.py = patrol.patrol_node:main',
         ],
     },
 )
