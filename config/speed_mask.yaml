@@ -2,6 +2,6 @@ image: speed_mask.pgm
 mode: scale
 resolution: 0.050
 origin: [-5.395, -9.691, 0.0]
-negate: 1                  # FIX: invert so white=0 (no limit), dark=100 (limit)
+negate: 1          
 occupied_thresh: 1.0
 free_thresh: 0.0
