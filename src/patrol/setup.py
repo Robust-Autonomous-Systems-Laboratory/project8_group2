@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'patrol_node = patrol.patrol_node:main',
+            'test.py = patrol.test:main',
             'patrol_node.py = patrol.patrol_node:main',
         ],
     },
