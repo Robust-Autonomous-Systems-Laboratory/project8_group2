@@ -1,6 +1,50 @@
 # Project 8, ROS2 Navigation Stack, Group 1
 #### Progress Munoriarwa, Malcolm Benedict, and Eineje Ameh
 
+## Introduction
+
+This exercise covers the Nav2 stack, tuneable parameters and autonomous navigation. Like the other exercises for this course, this was performed in ROS2 Jazzy on Ubuntu 24.04 LTS. The environment variables were exported from the `turtlebot_connect.sh` script, which exports the proper domain ID. The `nav2_params.yaml` file is based on the one included in the turtlebot3 repository. Initially, the default configuration file recommended by the Nav2 documentation was used. However, this generated issues, particularly with regards to `/cmd_vel`. The Turtlebot expects a TwistStamped message, while the default configuration produces a `Twist` message. Therefore, the robot would not respond to nav. goals until the proper config. filed was substituted in.
+
+## Setup
+
+### Basic Setup
+
+1. Clone the repository in the home directory.
+
+`git clone <SSH-URL or HTTPS-URL>`
+
+2. Change directories into the cloned repository and then build the package.
+```
+cd ~/project8_group1
+colcon build
+```
+3. Export your domain ID and Turtlebot model. Alternatively, `turtlebot_connect.sh` may also be sourced.
+```
+export TURTLEBOT3_MODEL=burger
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export ROS_DOMAIN_ID= #Your Turtlebot ID here
+```
+4. Secure Shell into the Turtlebot.
+```
+ssh ubuntu@#Your Turtlebot IP Address
+```
+5. On the Turtlebot, run the following to initialize it.
+```
+ros2 launch turtlebot3_bringup robot.launch.py
+```
+
+### Part 1
+1. Edit `config/nav2_params.yaml` with your desired values of `cost_scaling_factor` and `inflation_radius`. Save the file.
+2. Open up a new terminal window export the params and source it.
+```
+source install/setup.bash
+export TURTLEBOT3_MODEL=burger
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export ROS_DOMAIN_ID= #Your Turtlebot ID here
+```
+3. Run the 
+4. The Nav2 params. are configured to initially assume the Turtlebot is located on the marked start position. 
+
 ## Part 1 — Costmap Layer Configuration
 
 Using the recommended parameter ranges, nine total sets of parameters were examined, representing all combinations of the three radii and scaling factors. The inflation radius governed how far from a detected obstacle the cost would be increased. A large radius would result in the movement cost of a space being altered even a significant distance from the object itself. The scaling factor determined how the cost within the radius scaled. Therefore, the cost of any given space was based on its relative position within the radius and the scaling factor.
