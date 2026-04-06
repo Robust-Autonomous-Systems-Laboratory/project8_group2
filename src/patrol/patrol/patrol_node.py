@@ -11,12 +11,19 @@ from rclpy.node import Node
 
 from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
-
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, HistoryPolicy
 
 class PatrolNode(Node):
     def __init__(self, cycles: int = 3):
         super().__init__('patrol_node')
-
+        
+        qos = QoSProfile(
+        reliability=ReliabilityPolicy.BEST_EFFORT,
+        durability=DurabilityPolicy.VOLATILE,
+        history=HistoryPolicy.KEEP_LAST,
+        depth=1
+        )
+        
         self.cycles = cycles
         self.latest_amcl_pose: Optional[PoseWithCovarianceStamped] = None
 
@@ -24,15 +31,15 @@ class PatrolNode(Node):
             PoseWithCovarianceStamped,
             '/amcl_pose',
             self.amcl_callback,
-            10
+            qos
         )
-
+        
         self.navigator = BasicNavigator()
 
     def amcl_callback(self, msg: PoseWithCovarianceStamped):
         self.latest_amcl_pose = msg
 
-    def make_pose(self, x: float, y: float, yaw_deg: float) -> PoseStamped:
+    def make_pose(self, x: float, y: float, yaw_rad: float) -> PoseStamped:
         pose = PoseStamped()
         pose.header.frame_id = 'map'
         pose.header.stamp = self.navigator.get_clock().now().to_msg()
@@ -40,7 +47,7 @@ class PatrolNode(Node):
         pose.pose.position.y = y
         pose.pose.position.z = 0.0
 
-        yaw = math.radians(yaw_deg)
+        yaw = yaw_rad
         pose.pose.orientation.x = 0.0
         pose.pose.orientation.y = 0.0
         pose.pose.orientation.z = math.sin(yaw / 2.0)
@@ -55,11 +62,11 @@ class PatrolNode(Node):
         y = self.latest_amcl_pose.pose.pose.position.y
         return (x, y)
 
-    def wait_for_amcl_pose(self, timeout_sec: float = 10.0) -> Optional[Tuple[float, float]]:
+    def wait_for_amcl_pose(self, timeout_sec: float) -> Optional[Tuple[float, float]]:
         start_time = time.time()
 
         while time.time() - start_time < timeout_sec:
-            rclpy.spin_once(self, timeout_sec=0.1)
+            rclpy.spin_once(self, timeout_sec=5)
             pose = self.get_latest_pose_xy()
             if pose is not None:
                 return pose
@@ -77,18 +84,16 @@ class PatrolNode(Node):
         returns near the start and you can compute loop-closure drift cleanly.
         """
         return [
-            (1, 'Start corner / waypoint 1', self.make_pose(0.00, 0.00, 0.0)),
-            (2, 'Hall approach near keepout zone', self.make_pose(1.00, 0.20, 0.0)),
-            (3, 'Far side of room', self.make_pose(1.60, 1.00, 90.0)),
-            (4, 'Opposite wall / turn point', self.make_pose(0.80, 1.70, 180.0)),
-            (5, 'Return corridor through patrol loop', self.make_pose(-0.20, 1.00, -90.0)),
-            (6, 'Loop closure back near waypoint 1', self.make_pose(0.00, 0.00, 0.0)),
+            (1, 'Start corner / waypoint 1', self.make_pose(0.713, 1.173, -1.576)),
+            (2, 'Between desks', self.make_pose(-1.811, -3.470, -1.614)),
+            (3, 'Far corner of room', self.make_pose(-1.727, -6.928, -0.005)),
+            (4, 'Aisle by shelves', self.make_pose(5.134, -5.276, 1.573)),
+            (5, 'In speed limited zone', self.make_pose(4.028, 0.524, 3.115)),
+            (6, 'Loop closure', self.make_pose(0.713, 1.173, -1.576)),
         ]
 
     def wait_for_nav2_active(self):
         self.get_logger().info('Waiting for Nav2 to become active...')
-        self.navigator.waitUntilNav2Active()
-        self.get_logger().info('Nav2 is active.')
 
     def run_single_waypoint(self, waypoint_id: int, label: str, pose: PoseStamped) -> str:
         start_time = time.time()
@@ -124,7 +129,7 @@ class PatrolNode(Node):
     def run_patrol(self):
         self.wait_for_nav2_active()
 
-        initial_pose = self.wait_for_amcl_pose(timeout_sec=10.0)
+        initial_pose = self.wait_for_amcl_pose(timeout_sec=20.0)
         if initial_pose is None:
             self.get_logger().error('Could not get initial /amcl_pose. Make sure AMCL is running.')
             return
