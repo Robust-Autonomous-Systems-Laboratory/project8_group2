@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-PROJECT_DIR="$HOME/robotics/project_8"
+PROJECT_DIR="./"
 ROS_SETUP="/opt/ros/jazzy/local_setup.bash"
-TB_SETUP="$HOME/robotics/scripts/turtlebot_connect.sh"
+TB_SETUP="../scripts/turtlebot_connect.sh"
 WS_SETUP="$PROJECT_DIR/install/local_setup.bash"
 
 cd "$PROJECT_DIR"
