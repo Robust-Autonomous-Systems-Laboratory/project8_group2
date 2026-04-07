@@ -84,12 +84,12 @@ class PatrolNode(Node):
         returns near the start and you can compute loop-closure drift cleanly.
         """
         return [
-            (1, 'Start corner / waypoint 1', self.make_pose(0.713, 1.173, -1.576)),
+            (1, 'Start corner / waypoint 1', self.make_pose(1.61, 1.173, -1.576)),
             (2, 'Between desks', self.make_pose(-1.811, -3.470, -1.614)),
-            (3, 'Far corner of room', self.make_pose(-1.727, -6.928, -0.005)),
+            #(3, 'Far corner of room', self.make_pose(-1.727, -6.928, -0.005)),
             (4, 'Aisle by shelves', self.make_pose(5.134, -5.276, 1.573)),
             (5, 'In speed limited zone', self.make_pose(4.028, 0.524, 3.115)),
-            (6, 'Loop closure', self.make_pose(0.713, 1.173, -1.576)),
+            (6, 'Loop closure', self.make_pose(1.61, 1.173, -1.576)),
         ]
 
     def wait_for_nav2_active(self):

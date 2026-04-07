@@ -192,14 +192,17 @@ While completing this section, there was an issue where the Turtlebot would succ
 
 ## Part 4 — Patrol Execution and Analysis
 
+### Video
+
+https://drive.google.com/file/d/1F4Gu5LrNnwwKERF2yRdXJQHMdhXOklW2/view?usp=sharing
+
 ### Recovery
 
-While navigating to the waypoints in the back of the room, the Turtlebot ran into one of the chair feet. This happened because the chair feet are so low that the Turtlebot cannot see them. It stayed stuck for about 10 seconds, before backing up, adjusting the angle and driving around the chair successfully and continuing the patrol. This could be solved by increasing the inflation radius or decreasing cost scaling, to cause Nav2 to give the chairs a wider clearance.
-
+While navigating to the waypoints in the back of the room, the Turtlebot ran into one of the chair feet. This happened because the chair feet are so low that the Turtlebot cannot see them. This, combined with long patrol times led to frequent collisions and failures. To combat this, the back corner waypoint was eliminated entirely, leaving the other four plus loop closure. This performed substantially better; however, during cycle 2, the Turtlebot failed to navigate between two table legs, effectively being stuck in a local minimum. While it tried to recover by backing up, this was not successful and it eventually dropped that goal, after which it was able to recover and continue on.
 ### Drift Analysis
 
 | Cycle | Start pose (x, y) | End pose (x, y) | Drift (m) |
 | :---: | :---------------: | :-------------: | :-------: |
-|1      |                   |                 |           |
-|2      |                   |                 |           |
-|3      |                   |                 |           |
+|1      | 1.61, 1.17        | 1.609, 1.149    | 0.061     |
+|2      | 1.609, 1.149      | 1.632, 1.201    | 0.057     |
+|3      | 1.632, 1.201      | 1.697, 1.194    | 0.065     |

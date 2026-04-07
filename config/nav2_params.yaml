@@ -43,7 +43,7 @@ amcl:
     always_reset_initial_pose: false
     first_map_only: false
     initial_pose:
-      x: 0.713
+      x: 1.61
       y: 1.173
       z: 0.0
       yaw: -1.576
