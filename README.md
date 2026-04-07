@@ -175,9 +175,13 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 </div>
 
 ## Part 2 — Keepout and Speed Filter Zones
+### The taped floor zones
+## Part 2 — Keepout and Speed Filter Zones
 
 ![alt text](./figures/taped_floor.jpg "The taped floor zones")
+### Keepout zone rendered
 ![alt text](./figures/keepout_render.png "Keepout zone rendered")
+### Routes around the keepout zone
 ![alt text](./figures/keepout_path.png "Routes around the keepout zone")
 
 ## Part 3 — Autonomous Patrol Script
