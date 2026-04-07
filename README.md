@@ -184,7 +184,7 @@ ssh ubuntu@32.80.100.XXX # change this to your turtlebot's address!
 ```
 ros2 launch turtlebot3_bringup robot.launch.py
 ```
-#### Change the director in run_filters.sh
+#### Change the directory in run_filters.sh
 - Change ***PROJECT_DIR*** with your project directory name
 - Change ***TB_SETUP*** to the location that conatins your **turtulebot_connect.sh**
 #### Open new terminal
