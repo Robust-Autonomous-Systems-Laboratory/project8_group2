@@ -184,7 +184,7 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 
 ![alt text](./figures/patrol1.png "Terminal Output")
 
-While completing this section,there was an issue where the Turtlebot would successfully reach a goal, but report it had failed, as seen in the output log. This may have been the result of an issue where some node would become desynced from the others, causing transforms to be dropped. This tended to happen during long runs.
+While completing this section, there was an issue where the Turtlebot would successfully reach a goal, but report it had failed, as seen in the output log. This may have been the result of an issue where some node would become desynced from the others, causing transforms to be dropped. This tended to happen during long runs.
 
 ## Part 4 — Patrol Execution and Analysis
 
