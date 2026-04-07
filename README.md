@@ -175,6 +175,38 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 </div>
 
 ## Part 2 — Keepout and Speed Filter Zones
+## how to run ?
+#### Open a new terminal and connect to the turtlebot
+```
+ssh ubuntu@32.80.100.XXX # change this to your turtlebot's address!
+
+```
+```
+ros2 launch turtlebot3_bringup robot.launch.py
+```
+#### Change the director in run_filters.sh
+- Change ***PROJECT_DIR*** with your project directory name
+- Change ***TB_SETUP*** to the location that conatins your **turtulebot_connect.sh**
+#### Open new terminal
+
+```
+cd ~project_ws
+```
+**Then run the shell script**
+```
+chomd +x run_filters.sh
+```
+```
+./run_filters.sh
+```
+Which will open 6 new windows
+- Start the turtlebot3  navigator
+- keepout costmap filter server
+- Speed costmap filter server
+- Keepout mask server
+- Speed mask server
+- Configuring and activating lifecycle nodes
+
 ### The taped floor zones
 ## Part 2 — Keepout and Speed Filter Zones
 
@@ -183,6 +215,14 @@ Next, the obstacle layer parameters were varied, and a human was introduced to t
 ![alt text](./figures/keepout_render.png "Keepout zone rendered")
 ### Routes around the keepout zone
 ![alt text](./figures/keepout_path.png "Routes around the keepout zone")
+### Speed before the entering the speed zone
+![alt text](./figures/before_SL_1.png "Routes around the keepout zone")
+### Speed as it enters the speed zone
+![alt text](./figures/before_SL_2.png "Routes around the keepout zone")
+### Speed inside the speed zone (Speed reduced by 10%)
+![alt text](./figures/inside_speed_zone.png "Routes around the keepout zone")
+
+
 
 ## Part 3 — Autonomous Patrol Script
 
